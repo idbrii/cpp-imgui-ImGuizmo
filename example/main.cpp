@@ -524,6 +524,7 @@ struct MySequence : public ImSequencer::SequenceInterface
 //
 
 
+#if 0
 template <typename T, std::size_t N>
 struct Array
 {
@@ -682,6 +683,7 @@ struct GraphEditorDelegate : public GraphEditor::Delegate
 
    std::vector<GraphEditor::Link> mLinks = { {0, 0, 1, 0} };
 };
+#endif
 
 
 int main(int, char**)
@@ -720,7 +722,7 @@ int main(int, char**)
 
          tempBitmap[index] = 0xFF000000 +
          (int(255 * fabsf(sinf(dv * 3.141592f))) << 16) +
-         (int(255 * fabsf(sinf(dv * 3.141592f + 2 * 3.141592f / 3))) << 8) + 
+         (int(255 * fabsf(sinf(dv * 3.141592f + 2 * 3.141592f / 3))) << 8) +
          (int(255 * fabs(sin(dv * 3.141592f + 4.f * 3.141592f / 3.f))));
 
          index++;
@@ -851,7 +853,7 @@ int main(int, char**)
             ImZoomSlider::ImZoomSlider(0.f, 1.f, vMin, vMax, 0.01f, ImZoomSlider::ImGuiZoomSliderFlags_Vertical);
             ImGui::PopID();
          }
-      
+
          {
             ImGui::PushID(19);
             ImZoomSlider::ImZoomSlider(0.f, 1.f, uMin, uMax);
@@ -883,6 +885,7 @@ int main(int, char**)
          }
       }
 
+#if 0
       // Graph Editor
       static GraphEditor::Options options;
       static GraphEditorDelegate delegate;
@@ -895,9 +898,11 @@ int main(int, char**)
          ImGui::Checkbox("Show GraphEditor", &showGraphEditor);
          GraphEditor::EditOptions(options);
       }
+#endif
 
       ImGui::End();
 
+#if 0
       if (showGraphEditor)
       {
          ImGui::Begin("Graph Editor", NULL, 0);
@@ -914,6 +919,7 @@ int main(int, char**)
 
          ImGui::End();
       }
+#endif
 
       // render everything
       glClearColor(0.45f, 0.4f, 0.4f, 1.f);
