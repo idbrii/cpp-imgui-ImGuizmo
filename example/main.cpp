@@ -850,26 +850,56 @@ int main(int, char**)
       }
       if (ImGui::CollapsingHeader("Sequencer"))
       {
+         //~ // let's create the sequencer
+         //~ static int selectedEntry = -1;
+         //~ static int firstFrame = 0;
+         //~ static bool expanded = true;
+         //~ static int currentFrame = 100;
+
+         //~ ImGui::PushItemWidth(130);
+         //~ ImGui::InputInt("Frame Min", &mySequence.mFrameMin);
+         //~ ImGui::SameLine();
+         //~ ImGui::InputInt("Frame ", &currentFrame);
+         //~ ImGui::SameLine();
+         //~ ImGui::InputInt("Frame Max", &mySequence.mFrameMax);
+         //~ ImGui::PopItemWidth();
+         //~ Sequencer(&mySequence, &currentFrame, &expanded, &selectedEntry, &firstFrame, ImSequencer::SEQUENCER_EDIT_STARTEND | ImSequencer::SEQUENCER_ADD | ImSequencer::SEQUENCER_DEL | ImSequencer::SEQUENCER_COPYPASTE | ImSequencer::SEQUENCER_CHANGE_FRAME);
+         //~ // add a UI to edit that particular item
+         //~ if (selectedEntry != -1)
+         //~ {
+         //~   const MySequence::MySequenceItem &item = mySequence.myItems[selectedEntry];
+         //~   ImGui::Text("I am a %s, please edit me", SequencerItemTypeNames[item.mType]);
+         //~   // switch (type) ....
+         //~ }
+
+
+         //~ static float color[4] = { 0, 0, 0, 0, };
+         //~ ImGui::ColorEdit4("Color", color);
+
+
          // let's create the sequencer
          static int selectedEntry = -1;
          static int firstFrame = 0;
          static bool expanded = true;
          static int currentFrame = 100;
+         static bool was_expanded = false;
+         ImVec2 sequencer_size = ImGui::GetContentRegionAvail();
+         sequencer_size.y -= 20;
+         if (was_expanded) {
+            sequencer_size.y -= 25 * 2;
+         }
 
-         ImGui::PushItemWidth(130);
-         ImGui::InputInt("Frame Min", &mySequence.mFrameMin);
-         ImGui::SameLine();
-         ImGui::InputInt("Frame ", &currentFrame);
-         ImGui::SameLine();
-         ImGui::InputInt("Frame Max", &mySequence.mFrameMax);
-         ImGui::PopItemWidth();
-         Sequencer(&mySequence, &currentFrame, &expanded, &selectedEntry, &firstFrame, ImSequencer::SEQUENCER_EDIT_STARTEND | ImSequencer::SEQUENCER_ADD | ImSequencer::SEQUENCER_DEL | ImSequencer::SEQUENCER_COPYPASTE | ImSequencer::SEQUENCER_CHANGE_FRAME);
-         // add a UI to edit that particular item
-         if (selectedEntry != -1)
+         ImGui::BeginChild("Sequencer", sequencer_size);
          {
-           const MySequence::MySequenceItem &item = mySequence.myItems[selectedEntry];
-           ImGui::Text("I am a %s, please edit me", SequencerItemTypeNames[item.mType]);
-           // switch (type) ....
+            Sequencer(&mySequence, &currentFrame, &expanded, &selectedEntry, &firstFrame, ImSequencer::SEQUENCER_EDIT_ALL);
+         }
+         ImGui::EndChild();
+
+         was_expanded = ImGui::CollapsingHeader("Colors");
+         if (was_expanded) {
+            static float color[4] = { 0, 0, 0, 0, };
+            ImGui::ColorEdit4("Color", color);
+            ImGui::ColorEdit4("Another Color", color);
          }
       }
 
